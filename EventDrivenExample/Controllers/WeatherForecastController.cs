@@ -14,13 +14,14 @@ namespace EventDrivenExample.Controllers
         {
             _weatherForecastService = weatherForecastService;
             _auditService = auditService;
+            _auditService.Subscribe(_weatherForecastService);
         }
 
         [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get(int days)
         {
             IEnumerable<WeatherForecast> weatherForecasts = _weatherForecastService.GetWeatherForecast(days);
-            _auditService.WriteAuditLog($"Hava durumu sorgulandi...");
+
             return weatherForecasts;
         }
     }

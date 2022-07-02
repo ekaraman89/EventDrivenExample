@@ -1,12 +1,16 @@
-﻿using EventDrivenExample.Services.Abstract;
+﻿using EventDrivenExample.Events;
+using EventDrivenExample.Services.Abstract;
 
 namespace EventDrivenExample.Services.Concrete
 {
     public class AuditService : IAuditService
     {
-        public void WriteAuditLog(string text)
+        public void Subscribe(IWeatherForecastService weatherForecastService) =>
+            weatherForecastService.OnWeatherTransactionProcessed += WriteAuditLog;
+
+        private void WriteAuditLog(object sender, WeatherForecastEventArgs e)
         {
-            Console.WriteLine($"Audit Log : {text}");
+            Console.WriteLine($"Audit Log : {e.Days}");
         }
     }
 }
