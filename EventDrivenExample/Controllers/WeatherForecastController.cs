@@ -20,6 +20,7 @@ namespace EventDrivenExample.Controllers
         public IEnumerable<WeatherForecast> Get(int days)
         {
             IEnumerable<WeatherForecast> weatherForecasts = _weatherForecastService.GetWeatherForecast(days);
+            _auditService.WriteAuditLog($"Hava durumu sorgulandi...");
             return weatherForecasts;
         }
     }
